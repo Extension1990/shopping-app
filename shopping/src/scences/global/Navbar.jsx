@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Badge, Box, IconButton } from "@mui/material";
+import { Badge, Box, IconButton, Typography } from "@mui/material";
 import {
   PersonOutline,
   ShoppingBagOutlined,
@@ -42,7 +42,9 @@ function Navbar() {
           color={shades.secondary[500]}
           fontWeight="bold"
         >
-          FASHION SHOP
+          <Typography variant="h3" fontWeight="bold">
+            FASHION SHOP
+          </Typography>
         </Box>
         <Box
           display="flex"

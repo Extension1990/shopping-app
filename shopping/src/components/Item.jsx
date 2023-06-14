@@ -28,7 +28,7 @@ const Item = ({ item, width }) => {
   } = image;
 
   return (
-    <Box width={width}>
+    <Box width={width} marginTop="30px">
       <Box
         position="relative"
         onMouseOver={() => setIsHovered(true)}
@@ -69,7 +69,7 @@ const Item = ({ item, width }) => {
               onClick={() => {
                 dispatch(addToCart({ item: { ...item, count } }));
               }}
-              sx={{ backgroundColor: shades.primary[300], color: "white" }}
+              sx={{ backgroundColor: shades.primary[500], color: "white" }}
             >
               Add to Cart
             </Button>

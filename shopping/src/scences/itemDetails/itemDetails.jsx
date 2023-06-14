@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Button, IconButton, Divider, Typography } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { useParams } from "react-router-dom";
@@ -67,7 +67,7 @@ const ItemDetails = () => {
         {/* ACTIONS */}
         <Box flex="1 1 50%" mb="40px">
           <Box display="flex" justifyContent="space-between">
-            <Box>Home/Item</Box>
+            <Box><a href="">Home/Item</a></Box>
             <Box>Prev Next</Box>
           </Box>
 
@@ -134,9 +134,10 @@ const ItemDetails = () => {
 
       {/* RELATED ITEMS */}
       <Box mt="50px" width="100%">
-        <Typography variant="h3" fontWeight="bold">
+        <Typography variant="h3" fontWeight="bold" mb="20px">
           Related Products
         </Typography>
+        <Divider />
         <Box
           mt="20px"
           display="flex"

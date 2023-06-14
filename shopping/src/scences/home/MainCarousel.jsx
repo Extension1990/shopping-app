@@ -70,7 +70,7 @@ const MainCarousel = () => {
           <Box
             color="white"
             padding="20px"
-            borderRadius="5px"
+            borderRadius="0px"
             textAlign="left"
             backgroundColor="rgb(0, 0, 0, 0.6)"
             position="absolute"
