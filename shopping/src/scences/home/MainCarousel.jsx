@@ -62,7 +62,7 @@ const MainCarousel = () => {
             alt={`carousel-${index}`}
             style={{
               width: "100%",
-              height: "700px",
+              height: "500px",
               objectFit: "cover",
               backgroundAttachment: "fixed",
             }}
@@ -70,22 +70,22 @@ const MainCarousel = () => {
           <Box
             color="white"
             padding="20px"
-            borderRadius="1px"
+            borderRadius="5px"
             textAlign="left"
-            backgroundColor="rgb(0, 0, 0, 0.4)"
+            backgroundColor="rgb(0, 0, 0, 0.6)"
             position="absolute"
-            top="46%"
+            top="42%"
             left={isNonMobile ? "10%" : "0"}
             right={isNonMobile ? undefined : "0"}
             margin={isNonMobile ? undefined : "0 auto"}
             maxWidth={isNonMobile ? undefined : "240px"}
           >
-            <Typography color={shades.secondary[200]}>-- NEW ITEMS</Typography>
-            <Typography variant="h1">Summer Sale</Typography>
+            <Typography color={shades.secondary[200]}>-- <i>NEW ITEMS</i> --</Typography>
+            <Typography variant="h1">Winter Sale</Typography>
             <Typography
               fontWeight="bold"
-              color={shades.secondary[300]}
-              sx={{ textDecoration: "underline" }}
+              color={shades.secondary[200]}
+              sx={{ textDecoration: "underline", cursor: "pointer" }}
             >
               Discover More
             </Typography>

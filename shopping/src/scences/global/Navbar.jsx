@@ -27,6 +27,7 @@ function Navbar() {
       top="0"
       left="0"
       zIndex="1"
+      boxShadow="0px 10px 20px -20px rgba(0,0,0,0.45)"
     >
       <Box
         width="80%"

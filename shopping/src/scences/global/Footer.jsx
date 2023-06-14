@@ -62,7 +62,7 @@ function Footer() {
           Hall6B Gallagher Estate, 19 Richards Rd, Halfway House, 16/48 Richards Dr, Halfway House, Midrand, 1685
           </Typography>
           <Typography mb="30px" sx={{ wordWrap: "break-word" }}>
-            Email: shopwithus@gmail.com
+            Email: fashionshop@gmail.com
           </Typography>
           <Typography mb="30px">(+27 11) 333 4440</Typography>
         </Box>
