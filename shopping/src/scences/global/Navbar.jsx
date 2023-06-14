@@ -9,7 +9,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { shades } from "../../theme";
 import { setIsCartOpen } from "../../state";
-import logoApp from '../../assets/logoApp.jpg'
 
 function Navbar() {
   const navigate = useNavigate();
@@ -42,13 +41,6 @@ function Navbar() {
           color={shades.secondary[500]}
           fontWeight="bold"
         >
-          {/* <img
-            alt="logo"
-            width="300px"
-            height="400px"
-            src={logoApp}
-            style={{ cursor: "pointer" }}
-          /> */}
           FASHION SHOP
         </Box>
         <Box
