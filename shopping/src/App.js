@@ -11,6 +11,7 @@ import Confirmation from './scences/checkout/Confirmation';
 import Navbar from './scences/global/Navbar';
 import HomePage from './scences/home/HomePage';
 import CartMenu from './scences/global/CartMenu';
+import Footer from './scences/global/Footer';
 
  const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -35,6 +36,7 @@ function App() {
           <Route path="checkout/success" element={<Confirmation />} />
         </Routes>
         <CartMenu />
+        <Footer />
       </BrowserRouter>
     </div>
   );
