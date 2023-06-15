@@ -50,11 +50,11 @@ const Profile = () => {
             <Box 
                 mt="80px" 
                 p="20px"
-                sx={{
-                    display: 'grid',
-                    gap: 1,
-                    gridTemplateColumns: 'repeat(2, 1fr)',
-                }}
+                display="grid"
+                gridTemplateColumns="repeat(auto-fill, 100%)"
+                justifyContent="space-around"
+                rowGap="20px"
+                columnGap="1.33%"
             >
                 <Box
                     backgroundColor={neutral.light}

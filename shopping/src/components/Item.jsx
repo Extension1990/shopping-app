@@ -50,7 +50,7 @@ const Item = ({ item, width }) => {
           width="100%"
           padding="0 5%"
         >
-          <Box display="flex" justifyContent="space-between" width={260}>
+          <Box display="flex" justifyContent="space-between" width={270}>
             <Box
               display="flex"
               alignItems="center"
