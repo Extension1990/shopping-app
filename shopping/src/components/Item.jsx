@@ -40,7 +40,7 @@ const Item = ({ item, width }) => {
           height="400px"
           src={`http://localhost:1337${url}`}
           onClick={() => navigate(`/item/${item.id}`)}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", borderRadius: "10px" }}
         />
         <Box
           display={isHovered ? "block" : "none"}
@@ -50,7 +50,7 @@ const Item = ({ item, width }) => {
           width="100%"
           padding="0 5%"
         >
-          <Box display="flex" justifyContent="space-between">
+          <Box display="flex" justifyContent="space-between" width={260}>
             <Box
               display="flex"
               alignItems="center"
@@ -77,7 +77,7 @@ const Item = ({ item, width }) => {
         </Box>
       </Box>
 
-      <Box mt="3px">
+      <Box mt="3px" p="10px">
         <Typography variant="subtitle2" color={neutral.dark}>
           {category
             .replace(/([A-Z])/g, " $1")

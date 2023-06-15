@@ -7,6 +7,7 @@ import {
  } from 'react-router-dom';
 import ItemDetails from './scences/itemDetails/itemDetails';
 import Checkout from './scences/checkout/Checkout';
+import Profile from './scences/profile/Profile';
 import Confirmation from './scences/checkout/Confirmation';
 import Navbar from './scences/global/Navbar';
 import HomePage from './scences/home/HomePage';
@@ -33,6 +34,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="item/:itemId" element={<ItemDetails />} />
           <Route path="checkout" element={<Checkout />} />
+          <Route path="profile" element={<Profile />} />
           <Route path="checkout/success" element={<Confirmation />} />
         </Routes>
         <CartMenu />

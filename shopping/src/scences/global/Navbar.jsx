@@ -55,7 +55,10 @@ function Navbar() {
           <IconButton sx={{ color: "black" }}>
             <SearchOutlined />
           </IconButton>
-          <IconButton sx={{ color: "black" }}>
+          <IconButton 
+            sx={{ color: "black" }}
+            onClick={() => navigate('/profile')}
+          >
             <PersonOutline />
           </IconButton>
           <Badge
