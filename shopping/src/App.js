@@ -13,6 +13,8 @@ import Navbar from './scences/global/Navbar';
 import HomePage from './scences/home/HomePage';
 import CartMenu from './scences/global/CartMenu';
 import Footer from './scences/global/Footer';
+import Register from './scences/register/Register';
+import Login from './scences/login/Login';
 
  const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -36,6 +38,8 @@ function App() {
           <Route path="checkout" element={<Checkout />} />
           <Route path="profile" element={<Profile />} />
           <Route path="checkout/success" element={<Confirmation />} />
+          <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
         </Routes>
         <CartMenu />
         <Footer />

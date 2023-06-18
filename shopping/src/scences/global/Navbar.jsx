@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Badge, Box, IconButton, Typography } from "@mui/material";
+import { Badge, Box, IconButton, Typography, Button } from "@mui/material";
 import {
   PersonOutline,
   ShoppingBagOutlined,
@@ -85,6 +85,20 @@ function Navbar() {
           <IconButton sx={{ color: "black" }}>
             <MenuOutlined />
           </IconButton>
+          <Button
+              onClick={() => navigate('/login')}
+              variant="contained"
+              sx={{ backgroundColor: shades.secondary[400], color: "white" }}
+          >
+            Login
+          </Button>
+          <Button
+              onClick={() => navigate('/register')}
+              variant="contained"
+              sx={{ backgroundColor: shades.primary[400], color: "white" }}
+          >
+            Register
+          </Button>
         </Box>
       </Box>
     </Box>
