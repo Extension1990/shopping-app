@@ -1,118 +1,194 @@
-import { getIn } from "formik";
-import { Box, Button, Typography } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { shades } from "../../theme";
-
-const Register = ({
-    type,
-    values,
-    touched,
-    errors,
-    handleBlur,
-    handleChange,
-  }) => {
-
+import {
+    Box,
+    Button,
+    MenuItem,
+    TextField,
+    Typography,
+    useMediaQuery,
+    useTheme
+  } from "@mui/material";
+  import { Formik, Form } from "formik";
+  import { useNavigate } from "react-router-dom";
+  import * as yup from "yup";
+  import { shades } from "../../theme";
+  
+  const registerSchema = yup.object().shape({
+    firstName: yup.string().required("This field is required"),
+    lastName: yup.string().required("This field is required"),
+    userType: yup.string().required("This field is required"),
+    userName: yup.string().required("This field is required"),
+    email: yup.string().email("invalid email").required("This field is required"),
+    password: yup.string().required("This field is required"),
+    confirmPassword: yup.string().required("This field is required")
+  });
+  
+  const initialValuesRegister = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  };
+  
+  const Register = () => {
+    const { palette } = useTheme();
+    const navigate = useNavigate();
     const isNonMobile = useMediaQuery("(min-width:600px)");
-    // these functions allow for better code readability
-    const formattedName = (field) => `${type}.${field}`;
-    const formattedError = (field) =>
-    Boolean(
-        getIn(touched, formattedName(field)) &&
-        getIn(errors, formattedName(field))
-    );
-
-    const formattedHelper = (field) =>
-        getIn(touched, formattedName(field)) && getIn(errors, formattedName(field));
-
+  
+    const register = async (values) => {
+      const savedUserResponse = await fetch(
+        "http://localhost:3000/auth/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(values)
+        }
+      );
+  
+      const savedUser = await savedUserResponse.json();
+    
+  
+      if (savedUser) {
+        console.log(savedUser);
+        navigate("/");
+      }
+    };
+  
+    const handleFormSubmit = async (values) => {
+      console.log("Test");
+      console.log(values);
+      // await register(values);
+    };
+  
     return (
-        <Box width="80%" m="100px auto">
+      <Formik
+        initialValues={initialValuesRegister}
+        onSubmit={(values, {resetForm}) => {
+             handleFormSubmit(values);
+             resetForm()
+        }}
+        validationSchema={registerSchema}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+          resetForm
+        }) => (
+          <Form onSubmit={handleSubmit}>
             <Box
+                width="50%"
+                margin="80px auto"
                 display="grid"
-                gap="15px"
+                gap="30px"
                 gridTemplateColumns="repeat(4, minmax(0, 1fr))"
                 sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+                    "& > div": { gridColumn: isNonMobile ? undefined : "span 4" }
                 }}
             >
-                <TextField
-                    fullWidth
-                    type="text"
-                    label="First Name"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    // value={values.firstName}
-                    // name={formattedName("firstName")}
-                    // error={formattedError("firstName")}
-                    // helperText={formattedHelper("firstName")}
-                    sx={{ gridColumn: "span 2" }}
-                />
-                <TextField
-                    fullWidth
-                    type="text"
-                    label="Last Name"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    // value={values.lastName}
-                    // name={formattedName("lastName")}
-                    // error={formattedError("lastName")}
-                    // helperText={formattedHelper("lastName")}
-                    sx={{ gridColumn: "span 2" }}
-                />
-                <TextField
-                    fullWidth
-                    type="text"
-                    label="Email"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    // value={values.email}
-                    // name={formattedName("email")}
-                    // error={formattedError("email")}
-                    // helperText={formattedHelper("email")}
+                <Typography
+                    textAlign="center"
                     sx={{ gridColumn: "span 4" }}
-                />
-                <TextField
-                    fullWidth
-                    type="text"
-                    label="Password"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    // value={values.password}
-                    // name={formattedName("password")}
-                    // error={formattedError("password")}
-                    // helperText={formattedHelper("password")}
-                    sx={{ gridColumn: "span 2" }}
-                />
-                <TextField
-                    fullWidth
-                    type="text"
-                    label="Confirm Password"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    // value={values.password}
-                    // name={formattedName("passwordConfirm")}
-                    // error={formattedError("passwordConfirm")}
-                    // helperText={formattedHelper("passwordConfirm")}
-                    sx={{ gridColumn: "span 2" }}
-                />
+                >
+                    <h1>Register</h1>
+                </Typography>
+              <TextField
+                label="First Name *"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.firstName}
+                name="firstName"
+                error={Boolean(touched.firstName) && Boolean(errors.firstName)}
+                helperText={touched.firstName && errors.firstName}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                label="Last Name *"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.lastName}
+                name="lastName"
+                error={Boolean(touched.lastName) && Boolean(errors.lastName)}
+                helperText={touched.lastName && errors.lastName}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                label="Email *"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.email}
+                name="email"
+                error={Boolean(touched.email) && Boolean(errors.email)}
+                helperText={touched.email && errors.email}
+                sx={{ gridColumn: "span 4" }}
+              />
+              <TextField
+                label="Password *"
+                type="password"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.password}
+                name="password"
+                error={Boolean(touched.password) && Boolean(errors.password)}
+                helperText={touched.password && errors.password}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                label="Confirm Password *"
+                type="password"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.confirmPassword}
+                name="confirmPassword"
+                error={
+                  Boolean(touched.confirmPassword) &&
+                  Boolean(errors.confirmPassword)
+                }
+                helperText={touched.confirmPassword && errors.confirmPassword}
+                sx={{ gridColumn: "span 2" }}
+              />
                 <Button
-                    fullWidth
-                    type="submit"
-                    color="primary"
-                    variant="contained"
+                  fullWidth
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  sx={{
+                    backgroundColor: shades.primary[400],
+                    boxShadow: "none",
+                    color: "white",
+                    borderRadius: 1,
+                    padding: "15px 40px",
+                    gridColumn: "span 4"
+                  }}
+                >
+                  Register
+                </Button>
+                <Typography
+                    onClick={() => {
+                        navigate("/login");
+                        resetForm();
+                    }}
                     sx={{
-                        backgroundColor: shades.primary[400],
-                        boxShadow: "none",
-                        color: "white",
-                        borderRadius: 1,
-                        padding: "15px 40px",
+                        textDecoration: "underline",
+                        color: palette.secondary.main,
+                        gridColumn: "span 4",
+                        "&:hover": {
+                        cursor: "pointer",
+                        color: palette.secondary.light,
+                        gridColumn: "span 4"
+                        }
                     }}
                 >
-                    RGISTER
-                </Button>
+                    Already have an account? Login here
+                </Typography>
             </Box>
-        </Box>
-    )
-}
-
-export default Register;
+          </Form>
+        )}
+      </Formik>
+    );
+  };
+  
+  export default Register;

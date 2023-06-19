@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme, Grid } from "@mui/material";
 import ProfilePicture from "../../assets/pp.jpeg";
 import ProfileImage from "../../assets/myPicture.jpeg";
 
@@ -47,21 +47,13 @@ const Profile = () => {
                     <Typography fontWeight="bold" fontSize="15px">FASHION SHOP</Typography>
                 </Box>
             </Box>
-            <Box 
-                mt="80px" 
-                p="20px"
-                display="grid"
-                gridTemplateColumns="repeat(auto-fill, 100%)"
-                justifyContent="space-around"
-                rowGap="20px"
-                columnGap="1.33%"
-            >
-                <Box
+            <Grid container spacing={3} sx={{ width: '94%', m: '80px auto', pr: '20px' }} columns={16} margin="80px auto" direction={{xs: "column", md: "row"}}>
+              <Grid item xs={8}>
+              <Box
                     backgroundColor={neutral.light}
                     sx={{
                         borderRadius: "10px",
-                        padding: "0px",
-                        paddingBottom: "20px",
+                        padding: "10px",
                         width: "100%"
                     }}
                 >
@@ -87,19 +79,40 @@ const Profile = () => {
                         <p><b>Location:</b> RSA</p>
                     </Typography>
                 </Box>
-                <Box
+              </Grid>
+              <Grid item xs={8}>
+              <Box
                     backgroundColor={neutral.light}
                     sx={{
                         borderRadius: "10px",
-                        padding: "0px",
+                        padding: "10px",
                         width: "100%"
                     }}
                 >
                     <Typography fontWeight="bold" fontSize="15px" ml="20px">
-                        <h4>Orders & Purchases</h4>
+                        <h3>Personal Information</h3>
+                    </Typography>
+                    <Typography ml="20px">
+                        <p><b>Full Name:</b> Freddy Smalling</p>
+                    </Typography>
+                    <Typography ml="20px">
+                        <p><b>Mobile:</b> (011) 734 5599</p>
+                    </Typography>
+                    <Typography ml="20px">
+                        <p><b>Email:</b> freddy.s@gmail.com</p>
+                    </Typography>
+                    <Typography ml="20px">
+                        <p><b>Occupation:</b> CEO / Co-Founder</p>
+                    </Typography>
+                    <Typography ml="20px">
+                        <p><b>Company:</b> Fashion Shop</p>
+                    </Typography>
+                    <Typography ml="20px">
+                        <p><b>Location:</b> RSA</p>
                     </Typography>
                 </Box>
-            </Box>
+              </Grid>
+            </Grid>
         </Box>
     )
 }
