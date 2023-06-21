@@ -11,6 +11,9 @@ import {
   import { useNavigate } from "react-router-dom";
   import * as yup from "yup";
   import { shades } from "../../theme";
+  import { useDispatch, useSelector } from "react-redux";
+  import { useFormik } from "formik";
+  import { signup } from "../../redux/actions";
   
   const registerSchema = yup.object().shape({
     firstName: yup.string().required("This field is required"),
@@ -35,39 +38,56 @@ import {
     const navigate = useNavigate();
     const isNonMobile = useMediaQuery("(min-width:600px)");
   
-    const register = async (values) => {
-      const savedUserResponse = await fetch(
-        "http://localhost:3000/auth/register",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(values)
+    const dispatch = useDispatch();
+  const signupLoading = useSelector((state) => state.cart.user_loading);
+
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      passwordConfirm: "",
+    },
+    validationSchema: yup.object({
+      firstName: yup.string()
+        .max(15, "Must be 15 characters or less")
+        .required("This field is required"),
+      lastName: yup.string()
+        .max(20, "Must be 20 characters or less")
+        .required("This field is required"),
+      email: yup.string().email("Invalid email address").required("This field is required"),
+      password: yup.string()
+        .min(4, "Must be 4 characters or more")
+        .required("Password is required"),
+      passwordConfirm: yup.string()
+        .required("Confirm your password")
+        .oneOf([yup.ref("password"), null], "Passwords must match"),
+    }),
+
+    onSubmit: (values, actions) => {
+      console.log(values)
+      // alert(JSON.stringify(values, null, 2));
+      function alterFormToAPIResult(error, success) {
+        if (error) {
+          actions.setFieldTouched("password", false);
+          actions.setFieldValue("password", "");
+
+          actions.setFieldTouched("passwordConfirm", false);
+          actions.setFieldValue("passwordConfirm", "");
         }
-      );
-  
-      const savedUser = await savedUserResponse.json();
-    
-  
-      if (savedUser) {
-        console.log(savedUser);
-        navigate("/");
       }
-    };
-  
-    const handleFormSubmit = async (values) => {
-      console.log("Test");
-      console.log(values);
-      // await register(values);
-    };
+      dispatch(signup(values, alterFormToAPIResult));
+    },
+  });
   
     return (
       <Formik
         initialValues={initialValuesRegister}
         onSubmit={(values, {resetForm}) => {
-             handleFormSubmit(values);
+          formik.handleSubmit(values);
              resetForm()
         }}
-        validationSchema={registerSchema}
       >
         {({
           values,
@@ -75,10 +95,9 @@ import {
           touched,
           handleBlur,
           handleChange,
-          handleSubmit,
           resetForm
         }) => (
-          <Form onSubmit={handleSubmit}>
+          <Form>
             <Box
                 width="50%"
                 margin="80px auto"
@@ -97,58 +116,79 @@ import {
                 </Typography>
               <TextField
                 label="First Name *"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.firstName}
+                id="firstName"
                 name="firstName"
-                error={Boolean(touched.firstName) && Boolean(errors.firstName)}
-                helperText={touched.firstName && errors.firstName}
+                type="text"
+                value={formik.values.firstName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 sx={{ gridColumn: "span 2" }}
+                error={Boolean(formik.touched.firstName) && Boolean(formik.errors.firstName)}
+                helperText={formik.touched.firstName && formik.errors.firstName ? (
+                  <Typography className="text-danger" color="red">
+                    {formik.errors.firstName}
+                  </Typography>
+                ) : null}
               />
               <TextField
                 label="Last Name *"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.lastName}
                 name="lastName"
-                error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                helperText={touched.lastName && errors.lastName}
+                type="text"
+                value={formik.values.lastName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 sx={{ gridColumn: "span 2" }}
+                error={Boolean(formik.touched.lastName) && Boolean(formik.errors.lastName)}
+                helperText={formik.touched.lastName && formik.errors.lastName ? (
+                  <Typography className="text-danger" color="red">
+                    {formik.errors.lastName}
+                  </Typography>
+                ) : null}
               />
               <TextField
                 label="Email *"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
                 name="email"
-                error={Boolean(touched.email) && Boolean(errors.email)}
-                helperText={touched.email && errors.email}
+                type="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 sx={{ gridColumn: "span 4" }}
+                error={Boolean(formik.touched.email) && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email ? (
+                  <Typography className="text-danger" color="red">
+                    {formik.errors.email}
+                  </Typography>
+                ) : null}
               />
               <TextField
                 label="Password *"
-                type="password"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.password}
                 name="password"
-                error={Boolean(touched.password) && Boolean(errors.password)}
-                helperText={touched.password && errors.password}
+                type="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 sx={{ gridColumn: "span 2" }}
+                error={Boolean(formik.touched.password) && Boolean(formik.errors.password)}
+                helperText={formik.touched.password && formik.errors.password ? (
+                  <Typography className="text-danger" color="red">
+                    {formik.errors.password}
+                  </Typography>
+                ) : null}
               />
               <TextField
                 label="Confirm Password *"
+                name="passwordConfirm"
                 type="password"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.confirmPassword}
-                name="confirmPassword"
-                error={
-                  Boolean(touched.confirmPassword) &&
-                  Boolean(errors.confirmPassword)
-                }
-                helperText={touched.confirmPassword && errors.confirmPassword}
+                value={formik.values.passwordConfirm}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 sx={{ gridColumn: "span 2" }}
+                error={Boolean(formik.touched.passwordConfirm) && Boolean(formik.errors.passwordConfirm)}
+                helperText={formik.touched.passwordConfirm && formik.errors.passwordConfirm ? (
+                  <Typography className="text-danger" color="red">
+                    {formik.errors.passwordConfirm}
+                  </Typography>
+                ) : null}
               />
                 <Button
                   fullWidth

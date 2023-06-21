@@ -9,7 +9,48 @@ const initialState = {
 export const cartSlice = createSlice({
     name: 'cart',
     initialState,
+    user: null,
+    token: undefined,
+    user_loading: false, // `user` info is being processed [e.g Login]
+    token_loading: false, // when `token` info is being processed [e.g refreshing auth]
     reducers: {
+        addAuthToken(state, action) {
+          const { payload } = action;
+          return {
+            ...state,
+            token: payload?.token,
+          };
+        },
+        
+        addAuthUser(state, action) {
+          const { payload } = action;
+          return {
+            ...state,
+            user: { ...state.user, ...payload.user },
+          };
+        },
+
+        authUserLoading(state, action) {
+          const { payload } = action;
+          return {
+            ...state,
+            user_loading: Boolean(payload?.loading),
+          };
+        },
+
+        authUserLogout() {
+          return {
+            ...initialState,
+          };
+        },
+
+        authTokenLoading(state, action) {
+          const { payload } = action;
+          return {
+            ...state,
+            token_loading: Boolean(payload?.loading),
+          };
+        },
         setItems: (state, action) => {
             state.items = action.payload;
         },
@@ -42,7 +83,7 @@ export const cartSlice = createSlice({
 
         setIsCartOpen: (state) => {
             state.isCartOpen = !state.isCartOpen;
-        }
+        },
     }
 });
 
